@@ -1,49 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { withScriptjs, withGoogleMap } from 'react-google-maps';
+import MapComponent from './components/MapComponent';
 
-import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
-import * as DataVuzix from './data.json';
+const WrappedMap = withScriptjs(withGoogleMap(MapComponent));
 
-function Map() {
-  const [selectedPoint, setSelectedPoint] = useState(null);
-
-  return (
-    <GoogleMap defaultZoom={10} defaultCenter={{ lat: 40.735657, lng: -74.172363 }} >
-      {DataVuzix.vuzixMap.map(mapVuzix =>
-        <Marker
-          key={mapVuzix.id}
-          position={{ lat: mapVuzix.lat, lng: mapVuzix.long }}
-          onClick={() => {
-            console.log(selectedPoint)
-            setSelectedPoint(mapVuzix);
-          }}
-        />
-      )}
-
-      {selectedPoint && (
-        <InfoWindow
-          position={{ lat: selectedPoint.lat, lng: selectedPoint.long }}
-          zIndex={0}
-          onCloseClick={() => {
-            setSelectedPoint(null);
-          }}
-        >
-          <div>
-            <div>
-              <img src='/images (1).jpeg' style={{ borderRadius: 6 }}></img>
-            </div>
-            <div>
-              <h2>ID: {selectedPoint.id}</h2>
-              <p>Country: {selectedPoint.country}</p>
-            </div>
-          </div>
-        </InfoWindow>
-      )}
-    </GoogleMap>
-  );
-}
-
-const WrappedMap = withScriptjs(withGoogleMap(Map))
 function App() {
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
@@ -59,4 +21,8 @@ function App() {
 
 export default App;
 
-{/* icon={{ url: '/images.jpeg', scaledSize: new window.google.maps.Size(40, 40)}} */ }
+{/* 
+  icon={{ url: '/images.jpeg', scaledSize: new window.google.maps.Size(40, 40)}} 
+  speechDisplay = mapVuzix.speech == "" ? none : block;
+  personNamesDisplay = mapVuzix.person_names == [] ? none : block;
+*/ }
