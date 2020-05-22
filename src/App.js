@@ -21,7 +21,3 @@ function App() {
 }
 
 export default App;
-
-/*
-  icon={{ url: '/images.jpeg', scaledSize: new window.google.maps.Size(40, 40)}}
-*/
