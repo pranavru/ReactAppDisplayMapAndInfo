@@ -11,9 +11,13 @@ class Map extends React.Component {
         this.state = {
             selectedPoint: null
         }
-
         this.setPoint = this.setPoint.bind(this);
         this.Marker = this.Marker.bind(this);
+
+        navigator.geolocation.getCurrentPosition(pos => {
+            console.log(pos.coords.latitude);
+            console.log(pos.coords.longitude);
+        })
     }
 
     setPoint(mapVuzix) {
@@ -29,6 +33,7 @@ class Map extends React.Component {
                     onClick={() => {
                         console.log("Clicked")
                         this.setPoint(mapVuzix);
+
                     }}
                 />
             )
@@ -36,9 +41,8 @@ class Map extends React.Component {
     }
 
     render() {
-
         return (
-            <GoogleMap defaultZoom={10} defaultCenter={{ lat: 40.735657, lng: -74.172363 }} >
+            <GoogleMap defaultZoom={19} defaultCenter={{ lat: 40.7489, lng: -74.1566 }} >
                 {this.Marker(DataVuzix.vuzixMap)}
                 {this.state.selectedPoint && (
                     <InfoWindow
@@ -48,7 +52,6 @@ class Map extends React.Component {
                             this.setPoint(null);
                         }}
                     >
-
                         <MapInfoWindow point={this.state.selectedPoint} />
                     </InfoWindow>
                 )}
@@ -58,3 +61,8 @@ class Map extends React.Component {
 }
 
 export default Map;
+
+/**
+{ lat: 40.7489, lng: -74.1566 }
+{ lat: 0, lng: 0}
+*/

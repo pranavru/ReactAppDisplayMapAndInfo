@@ -7,6 +7,7 @@ import MapComponent from './components/MapComponent';
 const WrappedMap = withScriptjs(withGoogleMap(MapComponent));
 
 function App() {
+
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <WrappedMap
@@ -21,8 +22,6 @@ function App() {
 
 export default App;
 
-{/* 
-  icon={{ url: '/images.jpeg', scaledSize: new window.google.maps.Size(40, 40)}} 
-  speechDisplay = mapVuzix.speech == "" ? none : block;
-  personNamesDisplay = mapVuzix.person_names == [] ? none : block;
-*/ }
+/*
+  icon={{ url: '/images.jpeg', scaledSize: new window.google.maps.Size(40, 40)}}
+*/
