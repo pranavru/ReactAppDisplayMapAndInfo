@@ -11,7 +11,10 @@ class MapFilterComponent extends Component {
         this.state = {
             isSpeechDivVisible: false,
             isDateRangeVisible: false,
-            isPersonFilterVisible: false
+            isPersonFilterVisible: false,
+            queryParams: {
+                speech: ''
+            }
         }
         setTimeout(() => this.render(), 500);
     }
@@ -55,11 +58,42 @@ class MapFilterComponent extends Component {
         })
     }
 
+    handleChange(event) {
+        this.setState({ value: event.target.value })
+    }
+
+    handleSubmit(event) {
+        alert('A name was submitted: ' + this.state.value);
+        event.preventDefault();
+    }
+
     render() {
 
         return (
             <>
-                <CardImg top src={'/images (1).jpeg'} style={{ height: '33vh' }} />
+                {/* <CardImg top src={'/images (1).jpeg'} style={{ height: '33vh' }} /> */}
+
+                <div>
+                    <form onSubmit={this.handleSubmit.bind(this)}>
+                        <FormGroup>
+                            <Label for="exampleSearch">Search by Speech</Label>
+                            <InputGroup>
+                                <Input
+                                    type="search"
+                                    name="search"
+                                    id="exampleSearch"
+                                    placeholder="Search by Speech Value"
+                                    value={this.state.value}
+                                    onChange={this.handleChange.bind(this)}
+                                />
+                                <InputGroupAddon addonType="append">
+                                    <Button outline color="success" >Search</Button>
+                                </InputGroupAddon>
+                            </InputGroup>
+                        </FormGroup>
+                    </form>
+                </div>
+
                 <div className="col-md-12" style={{ height: '95vh', borderRadius: 6 }}>
                     <hr />
                     <Card>
@@ -92,6 +126,8 @@ class MapFilterComponent extends Component {
                                                 name="search"
                                                 id="exampleSearch"
                                                 placeholder="Search by Speech Value"
+                                                value={this.state.queryParams.spe}
+                                                onChange={this.handleChange.bind(this)}
                                             />
                                             <InputGroupAddon addonType="append">
                                                 <Button outline color="success">Search</Button>
