@@ -15,7 +15,7 @@ class MapFilterComponent extends Component {
             speech: '',
             noOfPersons: 0,
             isDate: false,
-            dateValue: []
+            dateValue: [new Date(), new Date()]
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -28,18 +28,21 @@ class MapFilterComponent extends Component {
             [name]: value
         })
         this.setState({
-            [name]: value === "true"? true: value === "false" ? false : value
+            [name]: value === "true" ? true : value === "false" ? false : value
         });
-        // console.log(this.state.isSpeech, "  ", name, "  ", value)
+    }
+
+    handleChangeDate(event) {
+        console.log("Value is ", new Date(event[0]));
+        this.setState({
+            dateValue: [new Date(event[0]), new Date(event[1])]
+        })
         console.log(this.state)
     }
 
-    handleChangeDate(value) {
-        console.log("Value is ", value);
-    }
-
     handleSubmit(event) {
-        alert()
+        event.preventDefault()
+        console.log(this.state)
     }
 
     render() {
@@ -119,7 +122,7 @@ class MapFilterComponent extends Component {
                             animationInDuration={400} animationOutDuration={600}
                             className={this.state.isDate ? "displayBlock" : "displayNone"} style={{ marginLeft: '5%' }} >
                             <InputGroup>
-                                <DateRangeFilter handleChangeDate={this.handleChangeDate} />
+                                <DateRangeFilter handleChangeDate={this.handleChangeDate.bind(this)} dateValue={this.state.dateValue} />
                                 {/* <InputGroupAddon addonType="append">
                                     <Button outline color="primary" >Search</Button>
                                 </InputGroupAddon> */}

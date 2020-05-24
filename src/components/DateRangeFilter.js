@@ -3,16 +3,13 @@ import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import { Card } from 'reactstrap';
 
 function DateRangeFilter(props) {
-    const [value, onChange] = useState([new Date(), new Date()]);
+    // const [value, props.handleChange] = useState([new Date(), new Date()]);
 
-    const handleChange = () => {
-        props.handleChangeDate(value)
-    }
     return (
         <Card>
             <DateRangePicker
-                onChange={handleChange}
-                value={value}
+                onChange={props.handleChangeDate}
+                value={props.dateValue}
                 name="dateValue"
                 autoFocus
                 isOpen
