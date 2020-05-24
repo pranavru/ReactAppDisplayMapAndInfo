@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { Card, CardImg, Button, Form, FormGroup, Label, Input, FormText, InputGroup, InputGroupAddon, InputGroupText, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import React, { Component } from 'react';
+import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import { Animated } from 'react-animated-css';
 import '../App.css';
 
@@ -10,6 +10,7 @@ class MapFilterComponent extends Component {
         this.state = {
             isSpeech: false,
             isPerson: false,
+            speech: '',
             noOfPersons: 0,
             isDate: false
         }
@@ -20,14 +21,15 @@ class MapFilterComponent extends Component {
 
     handleChange(event) {
         const target = event.target;
-        const value = target.name === "isSpeech" ? (target.value ? true : false) : target.name === "isPerson" ? (target.value ? true : false) : null;
+        const value = target.name === "isSpeech" ? (target.value ? true : false) : target.name === "isPerson" ? (target.value ? true : false) :
+            target.name === 'speech' ? target.value : target.name === "noOfPersons" ? target.value : null;
         const name = target.name;
         this.setState({
             [name]: value
         });
     }
 
-    handleSubmit(event) {
+    handleSubmit() {
         setTimeout(3000)
         console.log(this.state)
         alert()
@@ -43,7 +45,33 @@ class MapFilterComponent extends Component {
                             <option value={true}>Yes</option>
                             <option value={false}>No</option>
                         </select>
+
+                        <div style={{ margin: '3%' }}>
+                            {/** Speech Form  */}
+                            <Animated
+                                animationIn='fadeInUp' animationOut='fadeOut'
+                                animationInDuration={400} animationOutDuration={600}
+                                className={this.state.isSpeech ? "displayBlock" : "displayNone"}
+                            >
+
+                                <Label for="exampleSearch">Search by Speech</Label>
+                                <InputGroup>
+                                    <Input
+                                        type="search"
+                                        name="speech"
+                                        id="speechSearch"
+                                        placeholder="Search by Speech Value"
+                                        value={this.state.speech}
+                                        onChange={this.handleChange}
+                                    />
+                                    <InputGroupAddon addonType="append">
+                                        <Button outline color="success">Search</Button>
+                                    </InputGroupAddon>
+                                </InputGroup>
+                            </Animated>
+                        </div>
                     </FormGroup>
+
                     <FormGroup>
                         <Label style={{ width: '14vw' }}>Search by Persons?</Label>
                         <select style={{ width: '10vw' }} value={this.state.isPerson} onChange={this.handleChange} name="isPerson">
@@ -54,13 +82,15 @@ class MapFilterComponent extends Component {
                         <Animated
                             animationIn='fadeInUp' animationOut='fadeOut'
                             animationInDuration={400} animationOutDuration={600}
-                            className={this.state.isPerson ? "displayBlock" : "displayNone"} style={{ marginLeft: '5%'}} >
+                            className={this.state.isPerson ? "displayBlock" : "displayNone"} style={{ marginLeft: '5%' }} >
                             <InputGroup>
                                 <Input
                                     type="number"
-                                    name="personNumber"
-                                    id="personNumber"
+                                    name="noOfPersons"
                                     placeholder="No of Persons"
+                                    value={this.state.noOfPersons}
+                                    onChange={this.handleChange}
+                                    min={0} max={100}
                                 />
                                 <InputGroupAddon addonType="append">
                                     <Button outline color="primary" >Search</Button>
