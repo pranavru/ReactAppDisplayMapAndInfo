@@ -15,11 +15,13 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      filter: true
+      filter: false,
+      livePosition: { lat: 0, lng: 0 }
     }
   }
 
   render() {
+
     return (
       <>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css" />

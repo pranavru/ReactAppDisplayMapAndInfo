@@ -2,19 +2,15 @@ import React from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardSubtitle, CardHeader, CardFooter, CardText } from 'reactstrap';
 
 function displayWindowHeader(props) {
-    return (props.point.speech !== "" || props.point.person_names.length !== 0) ?
+    return (
         <>
             <CardHeader>
                 <CardTitle style={{ fontWeight: 'bold', fontSize: 16 }}>Vizux ID: {props.point.id} </CardTitle>
                 <CardSubtitle style={{ fontWeight: 'bold', fontSize: 12 }}>Country Location: {props.point.country}</CardSubtitle>
             </CardHeader>
             <CardImg top src={'/images (1).jpeg'} alt={props.point.id} />
-        </> :
-        <CardHeader>
-            <CardTitle style={{ fontWeight: 'bold', fontSize: 16 }}>Vizux ID: {props.point.id} </CardTitle>
-            <CardSubtitle style={{ fontWeight: 'bold', fontSize: 12 }}>Country Location: {props.point.country}</CardSubtitle>
-            <CardImg top src={'/images (1).jpeg'} alt={props.point.id} style={{ width: 50, height: 50, borderRadius: 30, position: 'absolute', left: 300, top: 8 }} />
-        </CardHeader>;
+        </>)
+
 }
 function displayBody(props) {
     return props.point.speech !== "" ?
@@ -51,3 +47,9 @@ function MapInfoWindow(props) {
 }
 
 export default MapInfoWindow;
+
+/* <CardHeader>
+            <CardTitle style={{ fontWeight: 'bold', fontSize: 16 }}>Vizux ID: {props.point.id} </CardTitle>
+            <CardSubtitle style={{ fontWeight: 'bold', fontSize: 12 }}>Country Location: {props.point.country}</CardSubtitle>
+            <CardImg top src={'/images (1).jpeg'} alt={props.point.id} style={{ width: 50, height: 50, borderRadius: 30, position: 'absolute', left: 300, top: 8 }} />
+        </CardHeader>; */

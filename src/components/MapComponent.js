@@ -4,31 +4,11 @@ import { GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import * as DataVuzix from '../data.json';
 import MapInfoWindow from './MapInfoWindow';
 
-class Map extends React.Component {
+function Map(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedPoint: null,
-            isOpen: false
-        }
-        this.setPoint = this.setPoint.bind(this);
-        this.Marker = this.Marker.bind(this);
+    const [selectedPoint, setSelectedPoint] = React.useState(null);
 
-        navigator.geolocation.getCurrentPosition(pos => {
-            console.log(pos.coords.latitude);
-            console.log(pos.coords.longitude);
-        })
-    }
-
-    setPoint(mapVuzix) {
-        this.setState({
-            selectedPoint: mapVuzix,
-            isOpen: mapVuzix === null ? false : true
-        });
-    }
-
-    Marker(data) {
+    const MarkerData = (data) => {
         return (
             data.map(mapVuzix =>
                 <Marker
@@ -36,28 +16,26 @@ class Map extends React.Component {
                     position={{ lat: mapVuzix.lat, lng: mapVuzix.long }}
                     onClick={() => {
                         console.log("Clicked")
-                        this.setPoint(mapVuzix);
+                        setSelectedPoint(mapVuzix)
                     }}
                 />
             )
         );
     }
 
-    render() {
-        return (
-            <GoogleMap defaultZoom={19} defaultCenter={{ lat: 40.7489, lng: -74.1566 }} >
-                {this.Marker(DataVuzix.vuzixMap)}
-                {this.state.selectedPoint && this.state.isOpen && (
-                    <InfoWindow
-                        position={{ lat: this.state.selectedPoint.lat, lng: this.state.selectedPoint.long }}
-                        zIndex={0} onCloseClick={() => { this.setPoint(null); }}
-                    >
-                        <MapInfoWindow point={this.state.selectedPoint} />
-                    </InfoWindow>
-                )}
-            </GoogleMap>
-        );
-    }
+    return (
+        <GoogleMap defaultZoom={19} defaultCenter={{ lat: 40.7489, lng: -74.1566 }} >
+            {MarkerData(DataVuzix.vuzixMap)}
+            {selectedPoint && (
+                <InfoWindow
+                    position={{ lat: selectedPoint.lat, lng: selectedPoint.long }}
+                    onCloseClick={() => { setSelectedPoint(null); }}
+                >
+                    <MapInfoWindow point={selectedPoint} />
+                </InfoWindow>
+            )}
+        </GoogleMap>
+    );
 }
 
 export default Map;
@@ -66,4 +44,5 @@ export default Map;
  *   icon={{ url: '/images.jpeg', scaledSize: new window.google.maps.Size(40, 40)}}
  *   { lat: 40.7489, lng: -74.1566 }
  *   { lat: 0, lng: 0}
+ *
 */
