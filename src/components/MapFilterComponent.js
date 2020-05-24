@@ -15,7 +15,7 @@ class MapFilterComponent extends Component {
             speech: '',
             noOfPersons: 0,
             isDate: false,
-            dateValue: {}
+            dateValue: []
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,38 +23,39 @@ class MapFilterComponent extends Component {
     }
 
     handleChange(event) {
-        const target = event.target;
-        const value = target.name === "isSpeech" ? (target.value ? true : false) : target.name === "isPerson" ? (target.value ? true : false) :
-            target.name === "isDate" ? (target.value ? true : false) : target.name === 'speech' ? target.value : target.name === "noOfPersons" ? target.value : null;
-        const name = target.name;
-        this.setState({
+        const { name, value } = event.target;
+        console.log({
             [name]: value
+        })
+        this.setState({
+            [name]: value === "true"? true: value === "false" ? false : value
         });
+        // console.log(this.state.isSpeech, "  ", name, "  ", value)
+        console.log(this.state)
     }
 
     handleChangeDate(value) {
-        console.log("Value is ",  value);
+        console.log("Value is ", value);
     }
 
     handleSubmit(event) {
-        setTimeout(3000)
-        console.log(this.state)
-        event.preventDefault()
+        alert()
     }
 
     render() {
         return (
-            <div className="col-md-12" style={{ height: '100vh' }}>
+            <div className="col-md-12" style={{ height: '100vh', paddingTop: '5%' }}>
+                <Label>Filters: </Label>
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <Label style={{ width: '14vw' }}>Search by Speech?</Label>
-                        <select value={this.state.isSpeech} onChange={this.handleChange} name="isSpeech" style={{ width: '10vw' }}>
+                        <select onChange={this.handleChange} name="isSpeech" style={{ width: '10vw' }}>
                             <option value={true}>Yes</option>
-                            <option value={false}>No</option>
+                            <option selected value={false}>No</option>
                         </select>
 
+                        {/** Speech Form  */}
                         <div style={{ margin: '3%' }}>
-                            {/** Speech Form  */}
                             <Animated
                                 animationIn='fadeInUp' animationOut='fadeOut'
                                 animationInDuration={400} animationOutDuration={600}
@@ -62,19 +63,17 @@ class MapFilterComponent extends Component {
                             >
 
                                 <Label for="exampleSearch">Search by Speech</Label>
-                                <InputGroup>
-                                    <Input
-                                        type="search"
-                                        name="speech"
-                                        id="speechSearch"
-                                        placeholder="Search by Speech Value"
-                                        value={this.state.speech}
-                                        onChange={this.handleChange}
-                                    />
-                                    <InputGroupAddon addonType="append">
-                                        <Button outline color="success">Search</Button>
-                                    </InputGroupAddon>
-                                </InputGroup>
+
+                                <Input
+                                    type="search"
+                                    name="speech"
+                                    id="speechSearch"
+                                    placeholder="Search by Speech Value"
+                                    value={this.state.speech}
+                                    onChange={this.handleChange}
+                                    style={{ width: "24vw" }}
+                                />
+
                             </Animated>
                         </div>
                     </FormGroup>
@@ -98,15 +97,15 @@ class MapFilterComponent extends Component {
                                     value={this.state.noOfPersons}
                                     onChange={this.handleChange}
                                     min={0} max={100}
+                                    style={{ width: "24vw" }}
                                 />
-                                <InputGroupAddon addonType="append">
+                                {/* <InputGroupAddon addonType="append">
                                     <Button outline color="primary" >Search</Button>
-                                </InputGroupAddon>
+                                </InputGroupAddon> */}
                             </InputGroup>
 
                         </Animated>
                     </FormGroup>
-
 
                     <FormGroup>
                         <Label style={{ width: '14vw' }}>Search by Date?</Label>
@@ -121,9 +120,9 @@ class MapFilterComponent extends Component {
                             className={this.state.isDate ? "displayBlock" : "displayNone"} style={{ marginLeft: '5%' }} >
                             <InputGroup>
                                 <DateRangeFilter handleChangeDate={this.handleChangeDate} />
-                                <InputGroupAddon addonType="append">
+                                {/* <InputGroupAddon addonType="append">
                                     <Button outline color="primary" >Search</Button>
-                                </InputGroupAddon>
+                                </InputGroupAddon> */}
                             </InputGroup>
 
                         </Animated>

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
+import { Card } from 'reactstrap';
 
 function DateRangeFilter(props) {
     const [value, onChange] = useState([new Date(), new Date()]);
 
     const handleChange = () => {
-        console.log("Chind Call")
-        this.props.handleChangeDate(value)
+        props.handleChangeDate(value)
     }
     return (
-        <div>
+        <Card>
             <DateRangePicker
-                onChange={[onChange, handleChange]}
+                onChange={handleChange}
                 value={value}
                 name="dateValue"
                 autoFocus
@@ -19,7 +19,7 @@ function DateRangeFilter(props) {
                 maxDate={new Date()}
                 rangeDivider='to'
             />
-        </div>
+        </Card>
     );
 }
 
