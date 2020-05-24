@@ -22,10 +22,10 @@ class Map extends React.Component {
     }
 
     setPoint(mapVuzix) {
-        this.setState({ 
+        this.setState({
             selectedPoint: mapVuzix,
-            isOpen: mapVuzix === null ? false: true
-         });
+            isOpen: mapVuzix === null ? false : true
+        });
     }
 
     Marker(data) {
@@ -50,10 +50,7 @@ class Map extends React.Component {
                 {this.state.selectedPoint && this.state.isOpen && (
                     <InfoWindow
                         position={{ lat: this.state.selectedPoint.lat, lng: this.state.selectedPoint.long }}
-                        zIndex={0}
-                        onCloseClick={() => {
-                            this.setPoint(null);
-                        }}
+                        zIndex={0} onCloseClick={() => { this.setPoint(null); }}
                     >
                         <MapInfoWindow point={this.state.selectedPoint} />
                     </InfoWindow>
