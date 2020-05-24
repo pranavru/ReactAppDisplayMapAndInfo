@@ -22,14 +22,12 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css" />
-          <Animated animationIn="slideInLeft"  animationInDuration={450} animationOut="zoomOut" isVisible={this.state.filter} style={{ zIndex: 4, position: 'absolute' }}>
-            <div style={{ zIndex: 2, backgroundColor: 'white', width: '30vw' }}>
-              <MapFilterComponent />
-            </div>
-          </Animated>
-        </>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css" />
+        <Animated animationIn="slideInLeft" animationInDuration={450} animationOut="zoomOut" isVisible={this.state.filter} style={{ zIndex: 4, position: 'absolute' }}>
+          <div style={{ zIndex: 2, backgroundColor: 'white', width: '30vw' }}>
+            <MapFilterComponent />
+          </div>
+        </Animated>
 
         <div style={{ width: '100vw', height: '100vh' }}>
           <WrappedMap
