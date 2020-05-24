@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import { Animated } from 'react-animated-css';
+import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import '../App.css';
+import DateRangeFilter from './DateRangeFilter';
 
 class MapFilterComponent extends Component {
     constructor(props) {
@@ -12,7 +14,8 @@ class MapFilterComponent extends Component {
             isPerson: false,
             speech: '',
             noOfPersons: 0,
-            isDate: false
+            isDate: false,
+            dateValue: {}
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -22,17 +25,21 @@ class MapFilterComponent extends Component {
     handleChange(event) {
         const target = event.target;
         const value = target.name === "isSpeech" ? (target.value ? true : false) : target.name === "isPerson" ? (target.value ? true : false) :
-            target.name === 'speech' ? target.value : target.name === "noOfPersons" ? target.value : null;
+            target.name === "isDate" ? (target.value ? true : false) : target.name === 'speech' ? target.value : target.name === "noOfPersons" ? target.value : null;
         const name = target.name;
         this.setState({
             [name]: value
         });
     }
 
-    handleSubmit() {
+    handleChangeDate(value) {
+        console.log("Value is ",  value);
+    }
+
+    handleSubmit(event) {
         setTimeout(3000)
         console.log(this.state)
-        alert()
+        event.preventDefault()
     }
 
     render() {
@@ -92,6 +99,28 @@ class MapFilterComponent extends Component {
                                     onChange={this.handleChange}
                                     min={0} max={100}
                                 />
+                                <InputGroupAddon addonType="append">
+                                    <Button outline color="primary" >Search</Button>
+                                </InputGroupAddon>
+                            </InputGroup>
+
+                        </Animated>
+                    </FormGroup>
+
+
+                    <FormGroup>
+                        <Label style={{ width: '14vw' }}>Search by Date?</Label>
+                        <select style={{ width: '10vw' }} value={this.state.isDate} onChange={this.handleChange} name="isDate">
+                            <option value={true}>Yes</option>
+                            <option value={false}>No</option>
+                        </select>
+
+                        <Animated
+                            animationIn='fadeInUp' animationOut='fadeOut'
+                            animationInDuration={400} animationOutDuration={600}
+                            className={this.state.isDate ? "displayBlock" : "displayNone"} style={{ marginLeft: '5%' }} >
+                            <InputGroup>
+                                <DateRangeFilter handleChangeDate={this.handleChangeDate} />
                                 <InputGroupAddon addonType="append">
                                     <Button outline color="primary" >Search</Button>
                                 </InputGroupAddon>
