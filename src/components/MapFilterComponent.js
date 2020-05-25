@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Card } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Card, InputGroup, InputGroupAddon, Button } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUsers, faCalendar, faDigitalTachograph, faCode } from '@fortawesome/free-solid-svg-icons'
 import { Animated } from 'react-animated-css';
 import '../App.css';
 import DateRangeFilter from './DateRangeFilter';
@@ -50,7 +52,7 @@ class MapFilterComponent extends Component {
         return (
             <div className="col-md-12" style={{ height: '100vh', paddingTop: '5%' }}>
                 <Card style={{ padding: 4 }}>
-                    <div style={{ border: 1, padding: 3 }}>
+                    <div >
                         <Label>Filters: </Label>
                         <Form onSubmit={this.handleSubmit}>
                             <FormGroup>
@@ -61,14 +63,17 @@ class MapFilterComponent extends Component {
                                 </select>
 
                                 {/** Speech Form  */}
-                                <div style={{ margin: '3%' }}>
-                                    <Animated
-                                        animationIn='fadeInUp' animationOut='fadeOut'
-                                        animationInDuration={400} animationOutDuration={600}
-                                        className={this.state.isSpeech ? "displayBlock" : "displayNone"}
-                                    >
-                                        <FormGroup>
-                                            <Label for="exampleSearch">Search by Speech</Label>
+                                <Animated
+                                    animationIn='fadeInUp' animationOut='fadeOut'
+                                    animationInDuration={400} animationOutDuration={600}
+                                    className={this.state.isSpeech ? "displayBlock" : "displayNone"} style={{ marginLeft: '5%', marginTop: '3%' }}
+                                >
+                                    <FormGroup>
+                                        <Label for="exampleSearch">Search by Speech</Label>
+                                        <InputGroup>
+                                            <InputGroupAddon addonType="append">
+                                                <Button style={{ borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }}><FontAwesomeIcon icon={faCode} size={"lg"} /></Button>
+                                            </InputGroupAddon>
                                             <Input
                                                 type="search"
                                                 name="speech"
@@ -76,12 +81,12 @@ class MapFilterComponent extends Component {
                                                 placeholder="Search by Speech Value"
                                                 value={this.state.speech}
                                                 onChange={this.handleChange}
-                                                style={{ width: "24vw" }}
+                                                style={{ width: "21vw" }}
                                             />
-                                        </FormGroup>
+                                        </InputGroup>
+                                    </FormGroup>
 
-                                    </Animated>
-                                </div>
+                                </Animated>
                             </FormGroup>
 
                             <FormGroup>
@@ -94,21 +99,21 @@ class MapFilterComponent extends Component {
                                 <Animated
                                     animationIn='fadeInUp' animationOut='fadeOut'
                                     animationInDuration={400} animationOutDuration={600}
-                                    className={this.state.isPerson ? "displayBlock" : "displayNone"} style={{ marginLeft: '5%' }} >
-                                    <Label for="exampleSearch">Search by Name</Label>
-                                    <Input
-                                        type="number"
-                                        name="noOfPersons"
-                                        placeholder="No of Persons"
-                                        value={this.state.noOfPersons}
-                                        onChange={this.handleChange}
-                                        min={0} max={100}
-                                        style={{ width: "24vw" }}
-                                    />
-                                    {/* <InputGroupAddon addonType="append">
-                                    <Button outline color="primary" >Search</Button>
-                                </InputGroupAddon> */}
-
+                                    className={this.state.isPerson ? "displayBlock" : "displayNone"} style={{ marginLeft: '5%', marginTop: '3%' }} >
+                                    <InputGroup>
+                                        <InputGroupAddon addonType="append">
+                                            <Button style={{ borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }}><FontAwesomeIcon icon={faUsers} size={"lg"} /></Button>
+                                        </InputGroupAddon>
+                                        <Input
+                                            type="number"
+                                            name="noOfPersons"
+                                            placeholder="No of Persons"
+                                            value={this.state.noOfPersons}
+                                            onChange={this.handleChange}
+                                            min={0} max={100}
+                                            style={{ width: "21vw" }}
+                                        />
+                                    </InputGroup>
                                 </Animated>
                             </FormGroup>
 
@@ -122,13 +127,17 @@ class MapFilterComponent extends Component {
                                 <Animated
                                     animationIn='fadeInUp' animationOut='fadeOut'
                                     animationInDuration={400} animationOutDuration={600}
-                                    className={this.state.isDate ? "displayBlock" : "displayNone"} style={{ marginLeft: '5%' }} >
+                                    className={this.state.isDate ? "displayBlock" : "displayNone"} style={{ marginLeft: '5%', marginTop: "3%" }} >
 
                                     <Label for="exampleSearch">Search by Date</Label>
-                                    <DateRangeFilter handleChangeDate={this.handleChangeDate.bind(this)} dateValue={this.state.dateValue} />
-                                    {/* <InputGroupAddon addonType="append">
-                                    <Button outline color="primary" >Search</Button>
-                                </InputGroupAddon> */}
+                                    <InputGroup>
+                                        <InputGroupAddon addonType="append">
+                                            <Button style={{ borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }}><FontAwesomeIcon icon={faCalendar} size={''} /></Button>
+                                        </InputGroupAddon>
+                                        <Card style={{ padding: 4, width: '22vw', borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}>
+                                            <DateRangeFilter handleChangeDate={this.handleChangeDate.bind(this)} dateValue={this.state.dateValue} />
+                                        </Card>
+                                    </InputGroup>
                                 </Animated>
                             </FormGroup>
 
