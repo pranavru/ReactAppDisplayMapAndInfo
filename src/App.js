@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { withScriptjs, withGoogleMap } from 'react-google-maps';
 import MapComponent from './components/MapComponent';
 import MapFilterComponent from './components/MapFilterComponent';
-import { Button, CardText } from 'reactstrap';
 import { Animated } from 'react-animated-css';
 
 const WrappedMap = withScriptjs(withGoogleMap(MapComponent));
@@ -15,8 +14,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      filter: false,
-      livePosition: { lat: 0, lng: 0 }
+      filter: true,
     }
   }
 
