@@ -15,7 +15,8 @@ class MapFilterComponent extends Component {
             speech: '',
             noOfPersons: 0,
             isDate: false,
-            dateValue: [new Date(), new Date()]
+            dateValue: [new Date(), new Date()],
+            disPlayVideo: false,
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -24,11 +25,9 @@ class MapFilterComponent extends Component {
 
     handleChange(event) {
         const { name, value } = event.target;
-        console.log({
-            [name]: value
-        })
         this.setState({
-            [name]: value === "true" ? true : value === "false" ? false : value
+            [name]: value === "true" ? true : value === "false" ? false : value,
+            disPlayVideo: false
         });
     }
 
@@ -37,11 +36,13 @@ class MapFilterComponent extends Component {
         this.setState({
             dateValue: [new Date(event[0]), new Date(event[1])]
         })
-        console.log(this.state)
     }
 
     handleSubmit(event) {
         event.preventDefault()
+        this.setState({
+            disPlayVideo: true
+        })
         console.log(this.state)
     }
 
@@ -135,7 +136,7 @@ class MapFilterComponent extends Component {
                         </Form>
                     </div>
                 </Card>
-                <DisplayVideoComponent videoSrc={"https://www.youtube.com/watch?v=pCgDRgmfilE"} />
+                <DisplayVideoComponent videoSrc={"https://www.youtube.com/watch?v=pCgDRgmfilE"} disPlayVideo={this.state.disPlayVideo} />
             </div>
         );
     }
