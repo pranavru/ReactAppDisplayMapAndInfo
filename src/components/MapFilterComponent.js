@@ -6,6 +6,7 @@ import { Animated } from 'react-animated-css';
 import '../App.css';
 import DateRangeFilter from './DateRangeFilter';
 import DisplayVideoComponent from './DisplayVideoComponent';
+import axios from "axios";
 
 class MapFilterComponent extends Component {
     constructor(props) {
@@ -21,15 +22,24 @@ class MapFilterComponent extends Component {
             disPlayVideo: false,
         }
 
+        this.a = [];
+        this.videoSrc = "";
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.personNamesMethod = this.personNamesMethod.bind(this);
 
+    }
+
+    componentDidMount() {
+        this.personNamesMethod();
+    }
+
+    personNamesMethod() {
         this.personNames = this.props.loadPersonNames().values()[Symbol.iterator]()
         this.a = [];
         for (let item of this.personNames) {
             this.a.push(item);
         }
-
     }
 
     handleChange(event) {
@@ -49,12 +59,17 @@ class MapFilterComponent extends Component {
         })
     }
 
-    handleSubmit(event) {
-        event.preventDefault()
+    async handleSubmit(event) {
+        event.preventDefault();
+        // await axios.post(this.props.baseURL+'/leaders').then(
+        //     res => {
+        //         console.log(res)
+        //     }
+        // )
         this.setState({
             disPlayVideo: true
         })
-        console.log(this.state)
+        
     }
 
 
@@ -69,7 +84,7 @@ class MapFilterComponent extends Component {
                             {/* * Speech Form * */}
                             <FormGroup>
                                 <Label style={{ width: '14vw', fontWeight: 'bold' }}>Search by Speech?</Label>
-                                <select value={this.state.isSpeech} onChange={this.handleChange} name="isSpeech" style={{ width: '10vw', backgroundColor : 'white' }}>
+                                <select value={this.state.isSpeech} onChange={this.handleChange} name="isSpeech" style={{ width: '10vw', backgroundColor: 'white' }}>
                                     <option value={true}>Yes</option>
                                     <option value={false}>No</option>
                                 </select>
@@ -103,7 +118,7 @@ class MapFilterComponent extends Component {
                             {/* * Persons Form * */}
                             <FormGroup>
                                 <Label style={{ width: '14vw', fontWeight: 'bold' }}>Search by Persons?</Label>
-                                <select style={{ width: '10vw', backgroundColor : 'white' }} value={this.state.isPerson} onChange={this.handleChange} name="isPerson">
+                                <select style={{ width: '10vw', backgroundColor: 'white' }} value={this.state.isPerson} onChange={this.handleChange} name="isPerson">
                                     <option value={true}>Yes</option>
                                     <option value={false}>No</option>
                                 </select>
@@ -116,7 +131,7 @@ class MapFilterComponent extends Component {
                                         <InputGroupAddon addonType="append">
                                             <Button style={{ borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }}><FontAwesomeIcon icon={faUsers} size={"lg"} /></Button>
                                         </InputGroupAddon>
-                                        <select style={{ width: '21vw', height: 36, minHeight: 36, backgroundColor : 'white'}} value={this.state.personName} onChange={this.handleChange} name="personName">
+                                        <select style={{ width: '21vw', height: 36, minHeight: 36, backgroundColor: 'white' }} value={this.state.personName} onChange={this.handleChange} name="personName">
                                             {this.a.map(v => <option value={v}> {v}</option>)}
                                         </select>
                                     </InputGroup>
@@ -126,7 +141,7 @@ class MapFilterComponent extends Component {
                             {/* * Date Value Form * */}
                             <FormGroup>
                                 <Label style={{ width: '14vw', fontWeight: 'bold' }}>Search by Date?</Label>
-                                <select style={{ width: '10vw', backgroundColor : 'white' }} value={this.state.isDate} onChange={this.handleChange} name="isDate">
+                                <select style={{ width: '10vw', backgroundColor: 'white' }} value={this.state.isDate} onChange={this.handleChange} name="isDate">
                                     <option value={true}>Yes</option>
                                     <option value={false}>No</option>
                                 </select>
@@ -152,7 +167,7 @@ class MapFilterComponent extends Component {
                         </Form>
                     </div>
                 </Card>
-                <DisplayVideoComponent videoSrc={"https://www.youtube.com/watch?v=pCgDRgmfilE"} disPlayVideo={this.state.disPlayVideo} />
+                <DisplayVideoComponent videoSrc={this.videoSrc} disPlayVideo={this.state.disPlayVideo} />
             </div>
         );
     }

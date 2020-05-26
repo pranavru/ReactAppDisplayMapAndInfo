@@ -6,6 +6,7 @@ import MapComponent from './components/MapComponent';
 import MapFilterComponent from './components/MapFilterComponent';
 import { Animated } from 'react-animated-css';
 import * as DataVuzix from './data.json';
+import axios from 'axios';
 
 const WrappedMap = withScriptjs(withGoogleMap(MapComponent));
 
@@ -15,14 +16,25 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      filter: true
+      filter: true,
+      DataVuzix: {}, baseURL: "https://localhost:3443"
     }
 
     //data calling
   }
 
+  componentDidMount() {
+    this.loadDataJson();
+  }
+
   loadDataJson() {
-    
+    //Paste the URL here
+    axios.get(this.state.baseURL + '/dishes').then(
+      res => {
+        this.setState({ DataVuzix: res.data })
+        console.log(res.data)
+      })
+
   }
 
   loadPersonNames() {
@@ -41,13 +53,13 @@ class App extends React.Component {
   }
 
   render() {
-
+    console.log(this.state.DataVuzix)
     return (
       <>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css" />
         <Animated animationIn="slideInLeft" animationInDuration={450} animationOut="zoomOut" isVisible={this.state.filter} style={{ zIndex: 4, position: 'absolute' }}>
           <div style={{ zIndex: 2, backgroundColor: 'white', width: '30vw' }}>
-            <MapFilterComponent loadPersonNames={this.loadPersonNames.bind(this)} />
+            <MapFilterComponent loadPersonNames={this.loadPersonNames.bind(this)} DataVuzix={this.state.DataVuzix} baseURL={this.state.baseURL} />
           </div>
         </Animated>
 
@@ -58,6 +70,7 @@ class App extends React.Component {
             containerElement={<div style={{ height: '100%' }} />}
             mapElement={<div style={{ height: '100%' }} />}
             filter={this.state.filter}
+            DataVuzix={this.state.DataVuzix}
           />
         </div>
       </>
