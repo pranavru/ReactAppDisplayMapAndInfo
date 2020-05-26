@@ -8,24 +8,30 @@ function Map(props) {
     const [selectedPoint, setSelectedPoint] = React.useState(null);
 
     const MarkerData = (data) => {
-        console.log(data);
-        return (
-            data.map(mapVuzix =>
-                <Marker
-                    key={mapVuzix.id}
-                    position={{ lat: mapVuzix.lat, lng: mapVuzix.long }}
-                    onClick={() => {
-                        console.log("Clicked")
-                        setSelectedPoint(mapVuzix)
-                    }}
-                />
-            )
-        );
+        if (data !== undefined) {
+            console.log(data.length, " ", props.defaultZoom);
+            return (
+                data.map(mapVuzix =>
+                    <Marker
+                        key={mapVuzix.id}
+                        position={{ lat: mapVuzix.lat, lng: mapVuzix.long }}
+                        onClick={() => {
+                            console.log("Clicked")
+                            setSelectedPoint(mapVuzix)
+                        }}
+                    />
+                )
+            );
+        }
+        else
+            return (<div></div>);
+
     }
 
     return (
-        <GoogleMap defaultZoom={19} defaultCenter={{ lat: 40.7489, lng: -74.1566 }} >
+        <GoogleMap defaultZoom={props.defaultZoom} defaultCenter={{ lat: 40.7489, lng: -74.1566 }} >
             {MarkerData(props.DataVuzix.vuzixMap)}
+
             {selectedPoint && (
                 <InfoWindow
                     position={{ lat: selectedPoint.lat, lng: selectedPoint.long }}

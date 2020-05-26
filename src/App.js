@@ -17,24 +17,39 @@ class App extends React.Component {
 
     this.state = {
       filter: true,
-      DataVuzix: {}, baseURL: "https://localhost:3443"
+      DataVuzix: {},
+      baseURL: "https://localhost:3443",
+      video: "",
+      defaultZoom: 0
     }
 
     //data calling
   }
 
   componentDidMount() {
-    this.loadDataJson();
+    this.loadDataJson('/vuzixMap');
   }
 
-  loadDataJson() {
-    //Paste the URL here
-    axios.get(this.state.baseURL + '/dishes').then(
-      res => {
-        this.setState({ DataVuzix: res.data })
-        console.log(res.data)
-      })
+  loadDataJson(URL) {
+    if (URL === '/vuzixMap')
+      axios.get(this.state.baseURL + '/vuzixMap').then(
+        res => {
+          console.log(res.data)
+          this.setState({ DataVuzix: res.data })
+        })
+    else if (URL === '/vuzixMap/video')
+      axios.get(this.state.baseURL + '/vuzixMap/video').then(
+        res => {
+          this.setState({ DataVuzix: res.data, video: res.data.video })
+        })
 
+    if (this.state.defaultZoom === 0) {
+      this.setState({ defaultZoom: 19 })
+    } else if (this.state.DataVuzix.vuzixMap.length > 200) {
+      this.setState({ defaultZoom: 12 })
+    } else {
+      this.setState({ defaultZoom: 15 })
+    }
   }
 
   loadPersonNames() {
@@ -53,13 +68,12 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.DataVuzix)
     return (
       <>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css" />
         <Animated animationIn="slideInLeft" animationInDuration={450} animationOut="zoomOut" isVisible={this.state.filter} style={{ zIndex: 4, position: 'absolute' }}>
           <div style={{ zIndex: 2, backgroundColor: 'white', width: '30vw' }}>
-            <MapFilterComponent loadPersonNames={this.loadPersonNames.bind(this)} DataVuzix={this.state.DataVuzix} baseURL={this.state.baseURL} />
+            <MapFilterComponent loadPersonNames={this.loadPersonNames.bind(this)} DataVuzix={this.state.DataVuzix} loadDataJson={this.loadDataJson.bind(this)} video={this.state.video} />
           </div>
         </Animated>
 
@@ -71,6 +85,7 @@ class App extends React.Component {
             mapElement={<div style={{ height: '100%' }} />}
             filter={this.state.filter}
             DataVuzix={this.state.DataVuzix}
+            defaultZoom={this.state.defaultZoom}
           />
         </div>
       </>

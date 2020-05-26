@@ -20,13 +20,16 @@ class MapFilterComponent extends Component {
             isDate: false,
             dateValue: [new Date(), new Date()],
             disPlayVideo: false,
+            videoSrc: ""
         }
 
         this.a = [];
-        this.videoSrc = "";
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.personNamesMethod = this.personNamesMethod.bind(this);
+
+        console.log(this.props.video)
 
     }
 
@@ -44,13 +47,10 @@ class MapFilterComponent extends Component {
 
     handleChange(event) {
         const { name, value } = event.target;
-        console.log({ name, value })
         this.setState({
             [name]: value === "true" ? true : value === "false" ? false : value,
             disPlayVideo: false
         });
-
-        console.log(this.state);
     }
 
     handleChangeDate(event) {
@@ -59,17 +59,15 @@ class MapFilterComponent extends Component {
         })
     }
 
-    async handleSubmit(event) {
+    handleSubmit(event) {
         event.preventDefault();
-        // await axios.post(this.props.baseURL+'/leaders').then(
-        //     res => {
-        //         console.log(res)
-        //     }
-        // )
+        this.props.loadDataJson('/vuzixMap/video')
         this.setState({
-            disPlayVideo: true
+            disPlayVideo: true, videoSrc: this.props.video
         })
-        
+
+        this.forceUpdate()
+
     }
 
 
@@ -167,7 +165,7 @@ class MapFilterComponent extends Component {
                         </Form>
                     </div>
                 </Card>
-                <DisplayVideoComponent videoSrc={this.videoSrc} disPlayVideo={this.state.disPlayVideo} />
+                <DisplayVideoComponent videoSrc={this.props.video} disPlayVideo={this.state.disPlayVideo} />
             </div>
         );
     }
