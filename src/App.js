@@ -21,6 +21,10 @@ class App extends React.Component {
     //data calling
   }
 
+  loadDataJson() {
+    
+  }
+
   loadPersonNames() {
     let personNames = new Map([]);
     DataVuzix.vuzixMap.map(m => {

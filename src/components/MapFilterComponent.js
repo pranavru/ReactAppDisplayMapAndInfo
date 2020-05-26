@@ -69,7 +69,7 @@ class MapFilterComponent extends Component {
                             {/* * Speech Form * */}
                             <FormGroup>
                                 <Label style={{ width: '14vw', fontWeight: 'bold' }}>Search by Speech?</Label>
-                                <select onChange={this.handleChange} name="isSpeech" style={{ width: '10vw' }}>
+                                <select value={this.state.isSpeech} onChange={this.handleChange} name="isSpeech" style={{ width: '10vw', backgroundColor : 'white' }}>
                                     <option value={true}>Yes</option>
                                     <option value={false}>No</option>
                                 </select>
@@ -103,7 +103,7 @@ class MapFilterComponent extends Component {
                             {/* * Persons Form * */}
                             <FormGroup>
                                 <Label style={{ width: '14vw', fontWeight: 'bold' }}>Search by Persons?</Label>
-                                <select style={{ width: '10vw' }} value={this.state.isPerson} onChange={this.handleChange} name="isPerson">
+                                <select style={{ width: '10vw', backgroundColor : 'white' }} value={this.state.isPerson} onChange={this.handleChange} name="isPerson">
                                     <option value={true}>Yes</option>
                                     <option value={false}>No</option>
                                 </select>
@@ -116,18 +116,9 @@ class MapFilterComponent extends Component {
                                         <InputGroupAddon addonType="append">
                                             <Button style={{ borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }}><FontAwesomeIcon icon={faUsers} size={"lg"} /></Button>
                                         </InputGroupAddon>
-                                        <select value={this.state.personName} onChange={this.handleChange} name="personName">
+                                        <select style={{ width: '21vw', height: 36, minHeight: 36, backgroundColor : 'white'}} value={this.state.personName} onChange={this.handleChange} name="personName">
                                             {this.a.map(v => <option value={v}> {v}</option>)}
                                         </select>
-                                        <Input
-                                            type="number"
-                                            name="noOfPersons"
-                                            placeholder="No of Persons"
-                                            value={this.state.noOfPersons}
-                                            onChange={this.handleChange}
-                                            min={0} max={100}
-                                            style={{ width: "21vw" }}
-                                        />
                                     </InputGroup>
                                 </Animated>
                             </FormGroup>
@@ -135,7 +126,7 @@ class MapFilterComponent extends Component {
                             {/* * Date Value Form * */}
                             <FormGroup>
                                 <Label style={{ width: '14vw', fontWeight: 'bold' }}>Search by Date?</Label>
-                                <select style={{ width: '10vw' }} value={this.state.isDate} onChange={this.handleChange} name="isDate">
+                                <select style={{ width: '10vw', backgroundColor : 'white' }} value={this.state.isDate} onChange={this.handleChange} name="isDate">
                                     <option value={true}>Yes</option>
                                     <option value={false}>No</option>
                                 </select>
