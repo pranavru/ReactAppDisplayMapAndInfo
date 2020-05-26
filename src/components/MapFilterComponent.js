@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, Input, Card, InputGroup, InputGroupAddon, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUsers, faCalendar, faDigitalTachograph, faCode } from '@fortawesome/free-solid-svg-icons'
+import { faUsers, faCalendar, faCode } from '@fortawesome/free-solid-svg-icons'
 import { Animated } from 'react-animated-css';
 import '../App.css';
 import DateRangeFilter from './DateRangeFilter';
@@ -14,8 +14,8 @@ class MapFilterComponent extends Component {
         this.state = {
             isSpeech: false,
             isPerson: false,
+            personName: '',
             speech: '',
-            noOfPersons: 0,
             isDate: false,
             dateValue: [new Date(), new Date()],
             disPlayVideo: false,
@@ -23,18 +23,27 @@ class MapFilterComponent extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.personNames = this.props.loadPersonNames().values()[Symbol.iterator]()
+        this.a = [];
+        for (let item of this.personNames) {
+            this.a.push(item);
+        }
+
     }
 
     handleChange(event) {
         const { name, value } = event.target;
+        console.log({ name, value })
         this.setState({
             [name]: value === "true" ? true : value === "false" ? false : value,
             disPlayVideo: false
         });
+
+        console.log(this.state);
     }
 
     handleChangeDate(event) {
-        console.log("Value is ", new Date(event[0]));
         this.setState({
             dateValue: [new Date(event[0]), new Date(event[1])]
         })
@@ -48,21 +57,23 @@ class MapFilterComponent extends Component {
         console.log(this.state)
     }
 
+
     render() {
+
         return (
             <div className="col-md-12" style={{ height: '100vh', paddingTop: '5%' }}>
                 <Card style={{ padding: 4 }}>
                     <div >
                         <Label>Filters: </Label>
                         <Form onSubmit={this.handleSubmit}>
+                            {/* * Speech Form * */}
                             <FormGroup>
                                 <Label style={{ width: '14vw', fontWeight: 'bold' }}>Search by Speech?</Label>
                                 <select onChange={this.handleChange} name="isSpeech" style={{ width: '10vw' }}>
                                     <option value={true}>Yes</option>
-                                    <option selected value={false}>No</option>
+                                    <option value={false}>No</option>
                                 </select>
 
-                                {/** Speech Form  */}
                                 <Animated
                                     animationIn='fadeInUp' animationOut='fadeOut'
                                     animationInDuration={400} animationOutDuration={600}
@@ -89,6 +100,7 @@ class MapFilterComponent extends Component {
                                 </Animated>
                             </FormGroup>
 
+                            {/* * Persons Form * */}
                             <FormGroup>
                                 <Label style={{ width: '14vw', fontWeight: 'bold' }}>Search by Persons?</Label>
                                 <select style={{ width: '10vw' }} value={this.state.isPerson} onChange={this.handleChange} name="isPerson">
@@ -104,6 +116,9 @@ class MapFilterComponent extends Component {
                                         <InputGroupAddon addonType="append">
                                             <Button style={{ borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }}><FontAwesomeIcon icon={faUsers} size={"lg"} /></Button>
                                         </InputGroupAddon>
+                                        <select value={this.state.personName} onChange={this.handleChange} name="personName">
+                                            {this.a.map(v => <option value={v}> {v}</option>)}
+                                        </select>
                                         <Input
                                             type="number"
                                             name="noOfPersons"
@@ -117,6 +132,7 @@ class MapFilterComponent extends Component {
                                 </Animated>
                             </FormGroup>
 
+                            {/* * Date Value Form * */}
                             <FormGroup>
                                 <Label style={{ width: '14vw', fontWeight: 'bold' }}>Search by Date?</Label>
                                 <select style={{ width: '10vw' }} value={this.state.isDate} onChange={this.handleChange} name="isDate">
@@ -132,7 +148,7 @@ class MapFilterComponent extends Component {
                                     <Label for="exampleSearch">Search by Date</Label>
                                     <InputGroup>
                                         <InputGroupAddon addonType="append">
-                                            <Button style={{ borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }}><FontAwesomeIcon icon={faCalendar} size={''} /></Button>
+                                            <Button style={{ borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }}><FontAwesomeIcon icon={faCalendar} /></Button>
                                         </InputGroupAddon>
                                         <Card style={{ padding: 4, width: '22vw', borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}>
                                             <DateRangeFilter handleChangeDate={this.handleChangeDate.bind(this)} dateValue={this.state.dateValue} />
